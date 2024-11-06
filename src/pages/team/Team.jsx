@@ -54,7 +54,7 @@ const Team = () => {
           team?.map((item, index) => {
             return (
               <a target="_blank" key={index} href={item?.link}>
-                <div key={index} className="max-w-sm mx-auto bg-white/15 shadow-lg rounded-lg overflow-hidden group">
+                <div key={index} className="max-w-sm mx-auto bg-white/15 h-full shadow-lg rounded-lg overflow-hidden group">
                   <div className=" overflow-hidden">
                     <img
                       className="w-full  brightness-90 group-hover:brightness-100 transition-transform duration-300 transform scale-100 group-hover:scale-110 h-48 object-cover"

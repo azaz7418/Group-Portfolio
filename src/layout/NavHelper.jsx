@@ -12,6 +12,8 @@ import Work from "../pages/work/Work.jsx";
 import Contact from "../pages/contact/Contact.jsx";
 // import Blogs from "../pages/blogs/Blogs.jsx";
 import Team from "../pages/team/Team.jsx";
+import Login from "../pages/login/Login.jsx";
+import Registration from "../pages/registration/Registration.jsx";
 
 export const NavHelper = [
   {
@@ -56,6 +58,18 @@ export const NavHelper = [
     path: "/contact",
     icon: <LuMessagesSquare />,
       component:<Contact/>,
+  },
+  {
+    name: "login",
+    path: "/login",
+    icon: <LuMessagesSquare />,
+      component:<Login/>,
+  },
+  {
+    name: "registration",
+    path: "/registration",
+    icon: <LuMessagesSquare />,
+      component:<Registration/>,
   },
 ];
 

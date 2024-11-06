@@ -18,8 +18,8 @@ const Home = () => {
             </div>
             <h1 className="h1 mb-6">
               Welcome to <br />
-              <span className=" text-accent">
-                Hike<span className="text-amber-300">IT</span>
+              <span className=" text-accent" style={{fontFamily:"Roboto"}}>
+                Knull <span className="text-amber-300" style={{fontFamily:"Satisfy"}}>IT</span>
               </span>
             </h1>
             <p className=" max-w-[500px] mb-9 text-white/80">
