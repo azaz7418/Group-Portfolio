@@ -16,7 +16,7 @@
     @apply text-[20px] md:text-[24px] leading-[1.1] font-semibold
   }
   .button{
-    @apply inline-flex items-center justify-center whitespace-nowrap rounded-full font-semibold text-base text-black ring-offset-black transition-colors bg-accent hover:bg-accent-hover py-[8px] px-[15px]
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-full font-semibold text-base text-black ring-offset-black transition-colors bg-accent active:bg-accent-hover hover:bg-accent-hover py-[8px] px-[15px]
   }
   
   /* .ant-select-selection-placeholder {
