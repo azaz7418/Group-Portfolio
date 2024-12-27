@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import Layout from "./layout/Layout";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import CreateUser from "./pages/User/CreateUser";
 
 const App = () => {
   const UserNav = useNavHelper();
@@ -21,6 +22,7 @@ const App = () => {
           UserNav.map((nav) => <Route path={nav?.path || "/"} key={nav?.path} element={nav?.component || <></>} />)}
         <Route path="/auth/group/login" element={<Login />} />
         <Route path="/*" element={<ErrorPage />} />
+        <Route path="/createUser" element={<CreateUser />} />
       </Route>
     )
   );
