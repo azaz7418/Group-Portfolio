@@ -74,9 +74,10 @@ const CreateUser = () => {
       name,
       designation,
       description,
-      image: image?.[0]?.response?.url || "",
+      image: image?.[0]?.response?.url || "https://img.freepik.com/free-photo/surprised-handsome-man-showing-banner-pointing-up_176420-18869.jpg?w=826&t=st=1726065625~exp=1726066225~hmac=25b99f94eb9970f25faeb231660e587d365738088b811d428004bc6aaaeb9245",
       social,
     };
+    console.log(body)
     mutate(body);
   };
     return (
