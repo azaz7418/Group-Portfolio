@@ -85,6 +85,12 @@ export const UserNav = [
     component: <Registration />,
     isShow:true
   },
+  {
+    name: "Users",
+    path: "/admin/users",
+    component: <AllUser/>,
+    isShow: true,
+  },
   // {
   //   name: "admin",
   //   path: "/admin",
@@ -95,12 +101,7 @@ export const UserNav = [
 ];
 
 export const AdminNav = [
-  {
-    name: "Users",
-    path: "/admin/users",
-    component: <AllUser/>,
-    isShow: true,
-  },
+  
   {
     name: "Edit Users",
     path: "/admin/users/edit/:id",

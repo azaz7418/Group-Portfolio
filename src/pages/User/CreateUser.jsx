@@ -1,24 +1,24 @@
 import {
-    // LockOutlined,
-    // MailOutlined,
-    MinusCircleOutlined,
-    PlusOutlined,
-    UploadOutlined,
-    // UserOutlined,
-  } from "@ant-design/icons";
-  import { Button, Form, Input, Space, Upload } from "antd";
-  import axios from "axios";
-  import { useMutation } from "react-query";
-  import { Link } from "react-router-dom";
-  import { baseURL } from "../../main";
-  import Swal from "sweetalert2";
-  
-  const createUser = async (body) => {
-    const { data } = await axios.post(`${baseURL}/teams`, body);
-    return data;
-  };
+  // LockOutlined,
+  // MailOutlined,
+  MinusCircleOutlined,
+  PlusOutlined,
+  UploadOutlined,
+  // UserOutlined,
+} from "@ant-design/icons";
+import { Button, Form, Input, Space, Upload } from "antd";
+import axios from "axios";
+import { useMutation } from "react-query";
+import { Link } from "react-router-dom";
+import { baseURL } from "../../main";
+import Swal from "sweetalert2";
+
+const createUser = async (body) => {
+  const { data } = await axios.post(`${baseURL}/teams`, body);
+  return data;
+};
 const CreateUser = () => {
-    const [form] = Form.useForm();
+  const [form] = Form.useForm();
   const { mutate } = useMutation({
     mutationKey: "createUser",
     mutationFn: createUser,
@@ -74,29 +74,21 @@ const CreateUser = () => {
       name,
       designation,
       description,
-      image: image?.[0]?.response?.url || "https://img.freepik.com/free-photo/surprised-handsome-man-showing-banner-pointing-up_176420-18869.jpg?w=826&t=st=1726065625~exp=1726066225~hmac=25b99f94eb9970f25faeb231660e587d365738088b811d428004bc6aaaeb9245",
+      image:
+        image?.[0]?.response?.url ||
+        "https://img.freepik.com/free-photo/surprised-handsome-man-showing-banner-pointing-up_176420-18869.jpg?w=826&t=st=1726065625~exp=1726066225~hmac=25b99f94eb9970f25faeb231660e587d365738088b811d428004bc6aaaeb9245",
       social,
     };
-    console.log(body)
+    console.log(body);
     mutate(body);
   };
-    return (
-        <div className="h-screen flex flex-col items-center">
+  return (
+    <div className="h-screen flex flex-col items-center">
       <h2 className="mb-10 text-3xl font-semibold text-accent">Create User</h2>
       <div className="w-1/2">
-        <Form
-          form={form}
-          name="register"
-          layout="vertical"
-          onFinish={handleFormSubmit}
-          autoComplete="off"
-        >
+        <Form form={form} name="register" layout="vertical" onFinish={handleFormSubmit} autoComplete="off">
           {/* Name Field */}
-          <Form.Item
-            name="name"
-            label="Name"
-            rules={[{ required: true, message: "Please input your name!" }]}
-          >
+          <Form.Item name="name" label="Name" rules={[{ required: true, message: "Please input your name!" }]}>
             <Input placeholder="Enter name" />
           </Form.Item>
 
@@ -171,27 +163,21 @@ const CreateUser = () => {
             getValueFromEvent={normFile}
             rules={[{ required: true, message: "Please upload an image!" }]}
           >
-            <Upload {...uploadProps} listType="picture-card" maxCount={1}>
-              <Button icon={<UploadOutlined />}>Click to upload</Button>
+            <Upload {...uploadProps} listType="picture" maxCount={1}>
+              <Button icon={<UploadOutlined />}>Upload Image</Button>
             </Upload>
           </Form.Item>
 
           {/* Submit Button */}
           <Form.Item>
-            <Button type="primary" htmlType="submit" block>
+            <Button className="button" type="primary" htmlType="submit" block>
               Submit
             </Button>
           </Form.Item>
         </Form>
       </div>
-      <div className="text-center text-lg mt-4">
-        Already Registered?{" "}
-        <Link to="/auth/group/login" className="text-[#00e187] font-semibold">
-          Sign In
-        </Link>
-      </div>
     </div>
-    );
+  );
 };
 
 export default CreateUser;
