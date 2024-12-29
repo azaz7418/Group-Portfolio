@@ -12,7 +12,7 @@ const App = () => {
   const UserNav = useNavHelper();
   // console.log({ UserNav });
   const { token } = useSelector((state) => state.auth);
-  axios.defaults.headers["Authorization"] = "Bearer= " + token;
+  axios.defaults.headers["Authorization"] = "Bearer " + token;
 
   const router = createBrowserRouter(
     createRoutesFromElements(

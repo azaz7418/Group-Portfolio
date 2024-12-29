@@ -14,7 +14,6 @@ const loginFunction = async (body) => {
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const { mutate, isError, error } = useMutation({
     mutationKey: ["login"],
     mutationFn: (body) => loginFunction(body),
@@ -26,7 +25,7 @@ const Login = () => {
             headers: { Authorization: token },
           });
           if (userData.success) {
-            dispatch(setAuth({ token, user: userData?.data }));
+            dispatch(setAuth({ token: data?.token, user: userData?.data }));
           }
         } catch (error) {
           // eslint-disable-next-line no-console
