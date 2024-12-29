@@ -6,6 +6,7 @@ import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from "@ant-design/i
 import { baseURL } from "../../main";
 
 const UpdateUser = ({ isModalOpen, editData, setIsModalOpen }) => {
+    const{name, designation, description, social}=editData
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
 
@@ -75,10 +76,10 @@ const UpdateUser = ({ isModalOpen, editData, setIsModalOpen }) => {
         form={form}
         layout="vertical"
         initialValues={{
-          name: editData?.name,
-          designation: editData?.designation,
-          description: editData?.description,
-          social: editData?.social || [],
+          name: name,
+          designation: designation,
+          description: description,
+          social: social || [],
           // image: editData?.image
           //   ? [{ url: editData.image }] // Ensure image is wrapped in an array if it's a URL
           //   : [
