@@ -9,7 +9,7 @@ import {
 import { Button, Form, Input, Space, Upload } from "antd";
 import axios from "axios";
 import { useMutation } from "react-query";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { baseURL } from "../../main";
 import Swal from "sweetalert2";
 
@@ -17,6 +17,29 @@ const createUser = async (body) => {
   const { data } = await axios.post(`${baseURL}/teams`, body);
   return data;
 };
+
+const customUpload = ({ file, onSuccess, onError }) => {
+  const formData = new FormData();
+  formData.append("photos", file);
+
+  axios
+    .post("/upload", formData)
+    .then((response) => {
+      // onSuccess(response.data, file);]
+      if (response.data) {
+        console.log("success", response);
+        onSuccess(response.data, file);
+      } else {
+        throw new Error("No response data");
+      }
+    })
+    .catch((error) => {
+      console.error("Upload failed:", error);
+      onError(error);
+      // message.error("Upload failed");
+    });
+};
+
 const CreateUser = () => {
   const [form] = Form.useForm();
   const { mutate } = useMutation({
@@ -41,34 +64,43 @@ const CreateUser = () => {
     },
   });
 
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
+  // const normFile = (e) => {
+  //   if (Array.isArray(e)) {
+  //     return e;
+  //   }
+  //   return e?.fileList;
+  // };
+
+  const normFile = ({ fileList }) => {
+    console.log({ fileList });
+    if (Array.isArray(fileList)) {
+      return fileList.map((item) => item.response?.data).filter((item) => item !== undefined);
     }
-    return e?.fileList;
+    return fileList.response?.data ? [fileList.response?.data] : [];
   };
 
-  const uploadProps = {
-    name: "file",
-    action: `${baseURL}/upload`,
-    onChange(info) {
-      if (info.file.status === "done") {
-        Swal.fire({
-          title: "Upload Success",
-          text: `${info.file.name} uploaded successfully.`,
-          icon: "success",
-        });
-      } else if (info.file.status === "error") {
-        Swal.fire({
-          title: "Upload Error",
-          text: `${info.file.name} upload failed.`,
-          icon: "error",
-        });
-      }
-    },
-  };
+  // const uploadProps = {
+  //   name: "file",
+  //   action: `${baseURL}/upload`,
+  //   onChange(info) {
+  //     if (info.file.status === "done") {
+  //       Swal.fire({
+  //         title: "Upload Success",
+  //         text: `${info.file.name} uploaded successfully.`,
+  //         icon: "success",
+  //       });
+  //     } else if (info.file.status === "error") {
+  //       Swal.fire({
+  //         title: "Upload Error",
+  //         text: `${info.file.name} upload failed.`,
+  //         icon: "error",
+  //       });
+  //     }
+  //   },
+  // };
 
   const handleFormSubmit = (values) => {
+
     const { name, designation, description, image, social } = values;
     const body = {
       name,
@@ -157,13 +189,24 @@ const CreateUser = () => {
 
           {/* Image Upload */}
           <Form.Item
-            name="image"
+            name="photos"
             label="Upload Image"
             valuePropName="fileList"
             getValueFromEvent={normFile}
             rules={[{ required: true, message: "Please upload an image!" }]}
           >
-            <Upload {...uploadProps} listType="picture" maxCount={1}>
+            <Upload
+              // fileList={solution?.images}
+              // onChange={({ fileList }) => {
+              //   form.setFieldsValue({ solution: { ...solution, images: fileList } });
+              //   setFormData({ ...formData, solution: { ...solution, images: fileList } });
+              // }}
+              customRequest={customUpload}
+              multiple={false}
+              name="photos"
+              listType="picture"
+              maxCount={1}
+            >
               <Button icon={<UploadOutlined />}>Upload Image</Button>
             </Upload>
           </Form.Item>
