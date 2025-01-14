@@ -1,13 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { createUser, deleteUser } from "../../constants/userConstant";
 import { MdDeleteOutline } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
 import { useState } from "react";
-// import { Button, Form, Input, Modal, Space } from "antd";
-// import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import UpdateUser from "./UpdateUser";
+import { createUser, deleteUser } from "../../../constants/userConstant";
 
 
 
@@ -83,7 +81,6 @@ const AllUser = () => {
           </div>
         );
       })}
-
       {isModalOpen && <UpdateUser isModalOpen={isModalOpen} editData={editingUser} setIsModalOpen={setIsModalOpen} />}
     </div>
   );

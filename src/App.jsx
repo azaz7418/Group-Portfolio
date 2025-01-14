@@ -2,11 +2,11 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import useNavHelper from "./layout/NavHelper";
 import Login from "./pages/login/Login";
 import ErrorPage from "./ErrorPage";
-import Home from "./pages/Home";
 import Layout from "./layout/Layout";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import CreateUser from "./pages/User/CreateUser";
+import CreateUser from "./pages/Admin/User/CreateUser";
+import AddWorkProject from "./pages/Admin/Work/AddWorkProject";
 
 const App = () => {
   const UserNav = useNavHelper();
@@ -23,6 +23,7 @@ const App = () => {
         <Route path="/auth/group/login" element={<Login />} />
         <Route path="/*" element={<ErrorPage />} />
         <Route path="/createUser" element={<CreateUser />} />
+        <Route path="/addWork" element={<AddWorkProject />} />
       </Route>
     )
   );

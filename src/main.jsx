@@ -1,16 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import Layout from "./layout/Layout.jsx";
-import { UserNav, AdminNav } from "./layout/NavHelper.jsx";
-import ErrorPage from "./ErrorPage.jsx";
 import axios from "axios";
 import {  ConfigProvider, theme } from "antd";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { Provider } from "react-redux";
 import { store } from "./pages/redux/store.js";
-import Admin from "./pages/Admin/Admin.jsx";
-import Login from "./pages/login/Login.jsx";
 import App from "./App.jsx";
 
 const queryClient = new QueryClient();

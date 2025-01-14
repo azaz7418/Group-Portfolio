@@ -10,7 +10,7 @@ import { Button, Form, Input, Space, Upload } from "antd";
 import axios from "axios";
 import { useMutation } from "react-query";
 // import { Link } from "react-router-dom";
-import { baseURL } from "../../main";
+import { baseURL } from "../../../main";
 import Swal from "sweetalert2";
 
 const createUser = async (body) => {

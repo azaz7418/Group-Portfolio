@@ -18,7 +18,8 @@ import Registration from "../pages/registration/Registration.jsx";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { userRole } from "../constants/userConstant.js";
-import AllUser from "../pages/User/AllUser.jsx";
+import AllUser from "../pages/Admin/User/AllUser.jsx";
+import WorkList from "../pages/Admin/Work/WorkList.jsx";
 
 export const UserNav = [
   {
@@ -76,19 +77,25 @@ export const UserNav = [
     path: "/auth/group/login",
     icon: <LuMessagesSquare />,
     component: <Login />,
-    isShow:true
+    isShow: true,
   },
   {
     name: "registration",
     path: "/auth/group/registration",
     icon: <LuMessagesSquare />,
     component: <Registration />,
-    isShow:true
+    isShow: true,
   },
   {
     name: "Users",
     path: "/admin/users",
-    component: <AllUser/>,
+    component: <AllUser />,
+    isShow: true,
+  },
+  {
+    name: "Work",
+    path: "/admin/work",
+    component: <WorkList />,
     isShow: true,
   },
   // {
@@ -101,7 +108,6 @@ export const UserNav = [
 ];
 
 export const AdminNav = [
-  
   {
     name: "Edit Users",
     path: "/admin/users/edit/:id",

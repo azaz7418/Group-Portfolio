@@ -17,3 +17,8 @@ export const createUser = async (body) => {
   const { data } = await axios.get(`${baseURL}/teams`, body);
   return data;
 };
+
+export const addWork = async (body) => {
+  const { data } = await axios.post(`${baseURL}/works`, body);
+  return data;
+};

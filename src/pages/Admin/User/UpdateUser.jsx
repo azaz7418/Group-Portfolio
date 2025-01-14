@@ -1,9 +1,9 @@
 import { Button, Form, Input, Modal, Space, Upload } from "antd";
-import { updateUser } from "../../constants/userConstant";
 import { useQueryClient, useMutation } from "react-query";
 import Swal from "sweetalert2";
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from "@ant-design/icons";
-import { baseURL } from "../../main";
+import { updateUser } from "../../../constants/userConstant";
+import { baseURL } from "../../../main";
 
 const UpdateUser = ({ isModalOpen, editData, setIsModalOpen }) => {
     const{name, designation, description, social}=editData
