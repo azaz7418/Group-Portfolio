@@ -1,12 +1,12 @@
 
 import { useQuery } from "react-query";
-import { createUser } from "../../constants/userConstant";
+import { getAllUser } from "../../constants/userConstant";
 
 
 const Team = () => {
   const { data: userData } = useQuery({
     queryKey: ["createUser"],
-    queryFn: createUser,
+    queryFn: getAllUser,
   });
 console.log(userData)
 

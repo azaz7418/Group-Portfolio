@@ -5,7 +5,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { FaUserEdit } from "react-icons/fa";
 import { useState } from "react";
 import UpdateUser from "./UpdateUser";
-import { createUser, deleteUser } from "../../../constants/userConstant";
+import {  deleteUser, getAllUser } from "../../../constants/userConstant";
 
 
 
@@ -17,7 +17,7 @@ const AllUser = () => {
 
   const { data: userData } = useQuery({
     queryKey: ["createUser"],
-    queryFn: createUser,
+    queryFn: getAllUser,
   });
 
   const { mutate: deleteUsers, error: deleteError } = useMutation({

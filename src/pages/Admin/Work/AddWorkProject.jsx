@@ -3,9 +3,9 @@ import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import Swal from "sweetalert2";
-import { addWork } from "../../../constants/userConstant";
+import { addWork, getAllUser } from "../../../constants/userConstant";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -14,6 +14,12 @@ const AddWorkProject = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [imageFile, setImageFile] = useState(null);
+
+  const { data: userData } = useQuery({
+    queryKey: ["createUser"],
+    queryFn: getAllUser,
+  });
+  console.log(userData);
 
   const { mutate } = useMutation({
     mutationFn: addWork,
@@ -26,7 +32,7 @@ const AddWorkProject = () => {
       });
       form.resetFields();
       setImageFile(null); // Reset file state
-      navigate("/works"); // Redirect to works page
+      navigate("/addWork"); // Redirect to works page
     },
     onError: async (error) => {
       await Swal.fire({
@@ -47,13 +53,13 @@ const AddWorkProject = () => {
   const onFinish = (values) => {
     const { title, description, category, image, users } = values;
     const body = {
-        title,
-        description,
-        category,
+      title,
+      description,
+      category,
       image:
         image?.[0]?.response?.url ||
-        "https://img.freepik.com/free-photo/surprised-handsome-man-showing-banner-pointing-up_176420-18869.jpg?w=826&t=st=1726065625~exp=1726066225~hmac=25b99f94eb9970f25faeb231660e587d365738088b811d428004bc6aaaeb9245",
-        users,
+        "https://img.freepik.com/free-vector/flat-design-web-designer-landing-page_23-2150333314.jpg?t=st=1738329696~exp=1738333296~hmac=ba4d9043531ea1ae6bb81190ce976f303cc22fdc09ea682723777fa1904f6def&w=900",
+      users,
     };
     console.log(body);
     mutate(body);
@@ -76,17 +82,8 @@ const AddWorkProject = () => {
     <div className="h-screen flex flex-col items-center">
       <h2 className="mb-10 text-3xl font-semibold text-accent">Add Project Information</h2>
       <div className="w-1/2">
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={onFinish}
-          initialValues={{ category: "Design" }}
-        >
-          <Form.Item
-            label="Title"
-            name="title"
-            rules={[{ required: true, message: "Please input the title!" }]}
-          >
+        <Form form={form} layout="vertical" onFinish={onFinish} initialValues={{ category: "Design" }}>
+          <Form.Item label="Title" name="title" rules={[{ required: true, message: "Please input the title!" }]}>
             <Input placeholder="Enter title" />
           </Form.Item>
 
@@ -111,21 +108,22 @@ const AddWorkProject = () => {
           </Form.Item>
 
           <Form.Item
-            label="Users"
+            label="Contributors"
             name="users"
-            rules={[{ required: true, message: "Please input at least one user ID!" }]}
+            rules={[{ required: true, message: "Please input at least one Contributor!" }]}
           >
-            <Select
-              mode="tags"
-              placeholder="Enter user IDs"
-              tokenSeparators={[","]}
-            />
+            <Select mode="tags" placeholder="Add Contributor" tokenSeparators={[","]}>
+              {userData?.data?.map((item, index) => {
+                return (
+                  <Option key={index} value={item._id}>
+                    {item.name}
+                  </Option>
+                );
+              })}
+            </Select>
           </Form.Item>
 
-          <Form.Item
-            label="Image"
-            rules={[{ required: true, message: "Please upload an image!" }]}
-          >
+          <Form.Item label="Image" rules={[{ required: true, message: "Please upload an image!" }]}>
             <Upload
               name="image"
               listType="picture"
