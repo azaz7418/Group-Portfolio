@@ -24,7 +24,7 @@ console.log(userData)
                 <div className=" overflow-hidden">
                   <img
                     className="w-full  brightness-90 group-hover:brightness-100 transition-transform duration-300 transform scale-100 group-hover:scale-110 h-48 object-cover"
-                    src={item?.image}
+                    src={item?.image?.url}
                     alt={item?.name}
                   />
                 </div>

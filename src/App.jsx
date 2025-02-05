@@ -7,6 +7,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import CreateUser from "./pages/Admin/User/CreateUser";
 import AddWorkProject from "./pages/Admin/Work/AddWorkProject";
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const App = () => {
   const UserNav = useNavHelper();
@@ -31,6 +33,8 @@ const App = () => {
   return (
     <div>
       <RouterProvider router={router} />
+      <ToastContainer />
+
     </div>
   );
 };

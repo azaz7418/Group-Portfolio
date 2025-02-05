@@ -12,6 +12,8 @@ import { useMutation } from "react-query";
 // import { Link } from "react-router-dom";
 import { baseURL } from "../../../main";
 import Swal from "sweetalert2";
+import UploadImage from "../../../components/UploadImage";
+import { useState } from "react";
 
 const createUser = async (body) => {
   const { data } = await axios.post(`${baseURL}/teams`, body);
@@ -42,6 +44,8 @@ const customUpload = ({ file, onSuccess, onError }) => {
 
 const CreateUser = () => {
   const [form] = Form.useForm();
+  const [isLoading, setIsLoading] = useState(false);
+
   const { mutate } = useMutation({
     mutationKey: "createUser",
     mutationFn: createUser,
@@ -100,15 +104,13 @@ const CreateUser = () => {
   // };
 
   const handleFormSubmit = (values) => {
-
     const { name, designation, description, image, social } = values;
+    console.log({ values });
     const body = {
       name,
       designation,
       description,
-      image:
-        image?.[0]?.response?.url ||
-        "https://img.freepik.com/free-photo/surprised-handsome-man-showing-banner-pointing-up_176420-18869.jpg?w=826&t=st=1726065625~exp=1726066225~hmac=25b99f94eb9970f25faeb231660e587d365738088b811d428004bc6aaaeb9245",
+      image: image?.[0],
       social,
     };
     console.log(body);
@@ -187,29 +189,17 @@ const CreateUser = () => {
             )}
           </Form.List>
 
-          {/* Image Upload */}
-          <Form.Item
-            name="photos"
-            label="Upload Image"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-            rules={[{ required: true, message: "Please upload an image!" }]}
-          >
-            <Upload
-              // fileList={solution?.images}
-              // onChange={({ fileList }) => {
-              //   form.setFieldsValue({ solution: { ...solution, images: fileList } });
-              //   setFormData({ ...formData, solution: { ...solution, images: fileList } });
-              // }}
-              customRequest={customUpload}
-              multiple={false}
-              name="photos"
-              listType="picture"
-              maxCount={1}
-            >
-              <Button icon={<UploadOutlined />}>Upload Image</Button>
-            </Upload>
-          </Form.Item>
+          <UploadImage
+            {...{
+              label: "Profile Picture",
+              listType: "picture",
+              maxCount: 1,
+              name: "image",
+              isLoading,
+              setIsLoading,
+              form,
+            }}
+          />
 
           {/* Submit Button */}
           <Form.Item>

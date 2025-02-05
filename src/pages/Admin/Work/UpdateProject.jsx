@@ -2,7 +2,6 @@ import { Button, Form, Input, Modal, Select, Upload } from "antd";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { updateProject, getAllUser } from "../../../constants/userConstant";
 import Swal from "sweetalert2";
-import { UploadOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
 const { Option } = Select;
