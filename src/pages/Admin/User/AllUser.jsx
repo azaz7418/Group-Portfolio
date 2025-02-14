@@ -19,6 +19,8 @@ const AllUser = () => {
     queryKey: ["createUser"],
     queryFn: getAllUser,
   });
+  console.log(userData);
+  
 
   const { mutate: deleteUsers, error: deleteError } = useMutation({
     mutationKey: ["deleteUser"],
@@ -63,7 +65,8 @@ const AllUser = () => {
           <div key={index} className=" bg-[#27272c] text-primary p-2 rounded">
             <div className=" flex items-center justify-between">
               <div className=" flex items-center">
-                <img className="w-9 h-9 mx-2 border-2 border-primary rounded-full" src={item.image?.url} alt={item.name} />
+                <img height={50} width={50} loading="lazy" 
+                className="w-9 h-9 mx-2 border-2 border-primary rounded-full" src={item.image?.url} alt={item.name} />
                 <div className="flex flex-col items-start justify-start leading-3 ml-2">
                   <h1 className=" font-bold text-accent">{item.name}</h1>
                   <h3 className=" text-xs text-white">{item.designation}</h3>

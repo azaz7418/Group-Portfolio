@@ -20,27 +20,27 @@ const createUser = async (body) => {
   return data;
 };
 
-const customUpload = ({ file, onSuccess, onError }) => {
-  const formData = new FormData();
-  formData.append("photos", file);
+// const customUpload = ({ file, onSuccess, onError }) => {
+//   const formData = new FormData();
+//   formData.append("photos", file);
 
-  axios
-    .post("/upload", formData)
-    .then((response) => {
-      // onSuccess(response.data, file);]
-      if (response.data) {
-        console.log("success", response);
-        onSuccess(response.data, file);
-      } else {
-        throw new Error("No response data");
-      }
-    })
-    .catch((error) => {
-      console.error("Upload failed:", error);
-      onError(error);
-      // message.error("Upload failed");
-    });
-};
+//   axios
+//     .post("/upload", formData)
+//     .then((response) => {
+//       // onSuccess(response.data, file);]
+//       if (response.data) {
+//         console.log("success", response);
+//         onSuccess(response.data, file);
+//       } else {
+//         throw new Error("No response data");
+//       }
+//     })
+//     .catch((error) => {
+//       console.error("Upload failed:", error);
+//       onError(error);
+//       // message.error("Upload failed");
+//     });
+// };
 
 const CreateUser = () => {
   const [form] = Form.useForm();
@@ -75,13 +75,13 @@ const CreateUser = () => {
   //   return e?.fileList;
   // };
 
-  const normFile = ({ fileList }) => {
-    console.log({ fileList });
-    if (Array.isArray(fileList)) {
-      return fileList.map((item) => item.response?.data).filter((item) => item !== undefined);
-    }
-    return fileList.response?.data ? [fileList.response?.data] : [];
-  };
+  // const normFile = ({ fileList }) => {
+  //   console.log({ fileList });
+  //   if (Array.isArray(fileList)) {
+  //     return fileList.map((item) => item.response?.data).filter((item) => item !== undefined);
+  //   }
+  //   return fileList.response?.data ? [fileList.response?.data] : [];
+  // };
 
   // const uploadProps = {
   //   name: "file",

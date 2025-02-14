@@ -4,11 +4,17 @@ import Swal from "sweetalert2";
 import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { updateUser } from "../../../constants/userConstant";
 import { baseURL } from "../../../main";
+import UploadImage from "../../../components/UploadImage";
+import { useEffect, useState } from "react";
 
 const UpdateUser = ({ isModalOpen, editData, setIsModalOpen }) => {
-    const{name, designation, description, social}=editData
+  const { name, designation, description, social } = editData;
   const [form] = Form.useForm();
+  const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
+  useEffect(() => {
+    form.setFieldsValue({ ...editData, image: Array.isArray(editData.image) ? editData.image : [editData.image] });
+  }, [editData]);
 
   const { mutate: updateUsers } = useMutation(updateUser, {
     onSuccess: () => {
@@ -30,32 +36,6 @@ const UpdateUser = ({ isModalOpen, editData, setIsModalOpen }) => {
     },
   });
 
-  const normFile = (e) => {
-    if (Array.isArray(e)) return e;
-    // If it's a single file, wrap it in an array to make it compatible with Upload component
-    return e?.fileList || [];
-  };
-
-  const uploadProps = {
-    name: "file",
-    action: `${baseURL}/upload`,
-    onChange(info) {
-      if (info.file.status === "done") {
-        Swal.fire({
-          title: "Upload Success",
-          text: `${info.file.name} uploaded successfully.`,
-          icon: "success",
-        });
-      } else if (info.file.status === "error") {
-        Swal.fire({
-          title: "Upload Error",
-          text: `${info.file.name} upload failed.`,
-          icon: "error",
-        });
-      }
-    },
-  };
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -63,7 +43,10 @@ const UpdateUser = ({ isModalOpen, editData, setIsModalOpen }) => {
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
-      updateUsers({ id: editData._id, body: values });
+      updateUsers({
+        id: editData._id,
+        body: { ...values, image: Array.isArray(values.image) ? values.image[0] : values.image },
+      });
       setIsModalOpen(false);
     } catch (error) {
       console.log("Validation Failed:", error);
@@ -75,19 +58,14 @@ const UpdateUser = ({ isModalOpen, editData, setIsModalOpen }) => {
       <Form
         form={form}
         layout="vertical"
-        initialValues={{
-          name: name,
-          designation: designation,
-          description: description,
-          social: social || [],
-          // image: editData?.image
-          //   ? [{ url: editData.image }] // Ensure image is wrapped in an array if it's a URL
-          //   : [
-          //       {
-          //         url: "https://img.freepik.com/free-photo/surprised-handsome-man-showing-banner-pointing-up_176420-18869.jpg?w=826&t=st=1726065625~exp=1726066225~hmac=25b99f94eb9970f25faeb231660e587d365738088b811d428004bc6aaaeb9245",
-          //       },
-          //     ],
-        }}
+        // initialValues={{
+        //   name: name,
+        //   designation: designation,
+        //   description: description,
+        //   social: social || [],
+        //   image: [editData?.image?.url]
+
+        // }}
         onFinish={handleOk}
       >
         <Form.Item name="name" label="Name">
@@ -128,17 +106,17 @@ const UpdateUser = ({ isModalOpen, editData, setIsModalOpen }) => {
             </>
           )}
         </Form.List>
-        {/* <Form.Item
-            name="image"
-            label="Upload Image"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-            rules={[{ required: true, message: "Please upload an image!" }]}
-          >
-            <Upload {...uploadProps} listType="picture" maxCount={1}>
-              <Button icon={<UploadOutlined />}>Upload Image</Button>
-            </Upload>
-          </Form.Item> */}
+        <UploadImage
+          {...{
+            label: "Profile Picture",
+            listType: "picture",
+            maxCount: 1,
+            name: "image",
+            isLoading,
+            setIsLoading,
+            form,
+          }}
+        />
       </Form>
     </Modal>
   );
