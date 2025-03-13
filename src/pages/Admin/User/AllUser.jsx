@@ -13,7 +13,6 @@ const AllUser = () => {
   const queryClient = useQueryClient();
   const [editingUser, setEditingUser] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [editData, setEditData] = useState();
 
   const { data: userData } = useQuery({
     queryKey: ["createUser"],

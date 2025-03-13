@@ -1,14 +1,12 @@
-import { Button, Form, Input, Modal, Space, Upload } from "antd";
+import { Button, Form, Input, Modal, Space } from "antd";
 import { useQueryClient, useMutation } from "react-query";
 import Swal from "sweetalert2";
-import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from "@ant-design/icons";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { updateUser } from "../../../constants/userConstant";
-import { baseURL } from "../../../main";
 import UploadImage from "../../../components/UploadImage";
 import { useEffect, useState } from "react";
 
 const UpdateUser = ({ isModalOpen, editData, setIsModalOpen }) => {
-  const { name, designation, description, social } = editData;
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
@@ -58,14 +56,6 @@ const UpdateUser = ({ isModalOpen, editData, setIsModalOpen }) => {
       <Form
         form={form}
         layout="vertical"
-        // initialValues={{
-        //   name: name,
-        //   designation: designation,
-        //   description: description,
-        //   social: social || [],
-        //   image: [editData?.image?.url]
-
-        // }}
         onFinish={handleOk}
       >
         <Form.Item name="name" label="Name">
