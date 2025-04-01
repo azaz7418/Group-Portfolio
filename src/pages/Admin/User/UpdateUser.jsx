@@ -7,8 +7,8 @@ import UploadImage from "../../../components/UploadImage";
 import { useEffect, useState } from "react";
 
 const UpdateUser = ({ isModalOpen, editData, setIsModalOpen }) => {
-  const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
+  const [form] = Form.useForm();
   const queryClient = useQueryClient();
   useEffect(() => {
     form.setFieldsValue({ ...editData, image: Array.isArray(editData.image) ? editData.image : [editData.image] });
@@ -53,11 +53,7 @@ const UpdateUser = ({ isModalOpen, editData, setIsModalOpen }) => {
 
   return (
     <Modal title="Update User" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} centered>
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={handleOk}
-      >
+      <Form form={form} layout="vertical" onFinish={handleOk}>
         <Form.Item name="name" label="Name">
           <Input placeholder="Enter name" />
         </Form.Item>

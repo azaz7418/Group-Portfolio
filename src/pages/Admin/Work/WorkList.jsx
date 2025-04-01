@@ -19,7 +19,7 @@ const WorkList = () => {
     queryKey: ["projects"],
     queryFn: getAllProjects,
   });
-  // console.log(projectData);
+  console.log(projectData);
 
   const { mutate: deleteProjects, error: deleteError } = useMutation({
     mutationKey: ["deleteProject"],

@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Select, Upload } from "antd";
+import { Form, Input, Modal, Select } from "antd";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { updateProject, getAllUser } from "../../../constants/userConstant";
 import Swal from "sweetalert2";
@@ -8,15 +8,15 @@ const { Option } = Select;
 
 const UpdateProject = ({ isModalOpen, editData, setIsModalOpen }) => {
   const { title, description, category, users } = editData;
-  
+
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
 
   // Fetch Users
-   const { data: userData } = useQuery({
-      queryKey: ["createUser"],
-      queryFn: getAllUser,
-    });
+  const { data: userData } = useQuery({
+    queryKey: ["createUser"],
+    queryFn: getAllUser,
+  });
 
   const { mutate: update_Project } = useMutation(updateProject, {
     onSuccess: () => {
@@ -47,7 +47,7 @@ const UpdateProject = ({ isModalOpen, editData, setIsModalOpen }) => {
     try {
       const values = await form.validateFields();
       console.log({ id: editData._id, body: values });
-      
+
       update_Project({ id: editData._id, body: values });
     } catch (error) {
       console.log("Validation Failed:", error);
@@ -55,28 +55,18 @@ const UpdateProject = ({ isModalOpen, editData, setIsModalOpen }) => {
   };
 
   return (
-    <Modal
-      title="Update Project"
-      open={isModalOpen}
-      onOk={handleOk}
-      onCancel={handleCancel}
-      centered
-    >
+    <Modal title="Update Project" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} centered>
       <Form
         form={form}
         layout="vertical"
         initialValues={{
-          title: title ,
-          description: description ,
+          title: title,
+          description: description,
           category: category,
           users: users,
         }}
       >
-        <Form.Item
-          label="Title"
-          name="title"
-          rules={[{ required: true, message: "Please input the title!" }]}
-        >
+        <Form.Item label="Title" name="title" rules={[{ required: true, message: "Please input the title!" }]}>
           <Input placeholder="Enter title" />
         </Form.Item>
 
@@ -88,11 +78,7 @@ const UpdateProject = ({ isModalOpen, editData, setIsModalOpen }) => {
           <TextArea rows={4} placeholder="Enter description" />
         </Form.Item>
 
-        <Form.Item
-          label="Category"
-          name="category"
-          rules={[{ required: true, message: "Please select a category!" }]}
-        >
+        <Form.Item label="Category" name="category" rules={[{ required: true, message: "Please select a category!" }]}>
           <Select placeholder="Select category">
             <Option value="Design">Design</Option>
             <Option value="Development">Development</Option>
@@ -113,7 +99,6 @@ const UpdateProject = ({ isModalOpen, editData, setIsModalOpen }) => {
             ))}
           </Select>
         </Form.Item>
-
         {/* <Form.Item
           label="Image"
           name="image"
