@@ -2,6 +2,8 @@ import { Form, Input, Modal, Select } from "antd";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { updateProject, getAllUser } from "../../../constants/userConstant";
 import Swal from "sweetalert2";
+import UploadImage from "../../../components/UploadImage";
+import { useState } from "react";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -11,6 +13,7 @@ const UpdateProject = ({ isModalOpen, editData, setIsModalOpen }) => {
 
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
+  const [isLoading, setIsLoading] = useState(false);
 
   // Fetch Users
   const { data: userData } = useQuery({
@@ -46,9 +49,12 @@ const UpdateProject = ({ isModalOpen, editData, setIsModalOpen }) => {
   const handleOk = async () => {
     try {
       const values = await form.validateFields();
-      console.log({ id: editData._id, body: values });
+      // console.log({ id: editData._id, body: values });
 
-      update_Project({ id: editData._id, body: values });
+      update_Project({
+        id: editData._id,
+        body: { ...values, image: Array.isArray(values.image) ? values.image[0].url : values.image },
+      });
     } catch (error) {
       console.log("Validation Failed:", error);
     }
@@ -99,6 +105,17 @@ const UpdateProject = ({ isModalOpen, editData, setIsModalOpen }) => {
             ))}
           </Select>
         </Form.Item>
+        <UploadImage
+          {...{
+            label: "Profile Picture",
+            listType: "picture",
+            maxCount: 1,
+            name: "image",
+            isLoading,
+            setIsLoading,
+            form,
+          }}
+        />
         {/* <Form.Item
           label="Image"
           name="image"

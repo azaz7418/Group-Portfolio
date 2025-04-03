@@ -1,10 +1,11 @@
-import { Form, Input, Button, Select, Upload, message } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Form, Input, Button, Select } from "antd";
+// import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useMutation, useQuery } from "react-query";
 import Swal from "sweetalert2";
 import { addWork, getAllUser } from "../../../constants/userConstant";
+import UploadImage from "../../../components/UploadImage";
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -12,13 +13,13 @@ const { Option } = Select;
 const AddWorkProject = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const [imageFile, setImageFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { data: userData } = useQuery({
     queryKey: ["createUser"],
     queryFn: getAllUser,
   });
-  console.log(userData);
+  // console.log(userData);
 
   const { mutate } = useMutation({
     mutationFn: addWork,
@@ -30,7 +31,6 @@ const AddWorkProject = () => {
         confirmButtonText: "OK",
       });
       form.resetFields();
-      setImageFile(null); // Reset file state
       navigate("/addWork"); // Redirect to works page
     },
     onError: async (error) => {
@@ -43,38 +43,19 @@ const AddWorkProject = () => {
     },
   });
 
-  const handleFileChange = (info) => {
-    const file = info.file.originFileObj;
-    setImageFile(file);
-    message.success(`${info.file.name} file selected successfully.`);
-  };
-
   const onFinish = (values) => {
     const { title, description, category, image, users } = values;
+    console.log("azaz", values);
+
     const body = {
       title,
       description,
       category,
-      image:
-        image?.[0]?.response?.url ||
-        "https://img.freepik.com/free-vector/flat-design-web-designer-landing-page_23-2150333314.jpg?t=st=1738329696~exp=1738333296~hmac=ba4d9043531ea1ae6bb81190ce976f303cc22fdc09ea682723777fa1904f6def&w=900",
+      image: image?.[0].url,
       users,
     };
-    console.log(body);
+    console.log("body", body);
     mutate(body);
-    // const formData = new FormData();
-    // formData.append("title", values.title);
-    // formData.append("description", values.description);
-    // formData.append("category", values.category);
-    // formData.append("users", JSON.stringify(values.users));
-    // if (imageFile) {
-    //   formData.append("image", imageFile);
-    // } else {
-    //   message.error("Please upload an image!");
-    //   return;
-    // }
-
-    // mutate(formData); // Trigger react-query mutation
   };
 
   return (
@@ -122,16 +103,17 @@ const AddWorkProject = () => {
             </Select>
           </Form.Item>
 
-          <Form.Item label="Image" rules={[{ required: true, message: "Please upload an image!" }]}>
-            <Upload
-              name="image"
-              listType="picture"
-              beforeUpload={() => false} // Prevent automatic upload
-              onChange={handleFileChange}
-            >
-              <Button icon={<UploadOutlined />}>Click to Upload</Button>
-            </Upload>
-          </Form.Item>
+          <UploadImage
+            {...{
+              label: "Profile Picture",
+              listType: "picture",
+              maxCount: 1,
+              name: "image",
+              isLoading,
+              setIsLoading,
+              form,
+            }}
+          />
 
           <Form.Item>
             <Button type="primary" htmlType="submit">
