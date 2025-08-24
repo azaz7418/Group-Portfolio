@@ -16,11 +16,11 @@ axios.defaults.baseURL = baseURL;
 
 const themeConfig = {
   token: {
-    colorPrimary: "#00ff99", // Green primary color
-    colorText: "#1DA57A",
-    colorIcon: "#1DA57A",
+    colorPrimary: "#5E81AC", // Green primary color
+    colorText: "#88C0D0",
+    colorIcon: "#88C0D0",
     colorTextButtonHover: "#52c41a",
-    hoverColor: "#fffff",
+    hoverColor: "#2E3440",
   },
 
   // 1. Use dark algorithm

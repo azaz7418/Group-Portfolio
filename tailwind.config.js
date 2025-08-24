@@ -18,10 +18,10 @@ export default {
         primary: ["JetBrains Mono"],
       },
       colors: {
-        primary: "#001A0F",
+        primary: "#2E3440",  // Deep nordic blue
         accent: {
-          DEFAULT: "#00ff99",
-          hover: "#00e187",
+          DEFAULT: "#88C0D0", // Arctic blue
+          hover: "#5E81AC",   // Darker arctic blue
         },
       },
     },
